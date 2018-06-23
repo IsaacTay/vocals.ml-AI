@@ -31,7 +31,7 @@ class GenerativeModel(nn.Module):
                 x = F.tanh(layer(torch.cat((saves[i-1][0], x), dim=2)))
         x = x.reshape(self.input_channels)
         x = self.linear(x)
-        x = x.reshape(1, self.output_channels)
+        x = x.reshape(self.output_channels)
         return (x, saves)
     
 class SpeechEncodingModel(nn.Module):
