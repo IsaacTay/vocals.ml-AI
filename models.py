@@ -68,4 +68,4 @@ class VoiceDiscriminatorModel(nn.Module):
         self.linear = nn.Linear(self.input_size*2, 1)
     
     def forward(self, x):
-        return self.linear(self.layer(x.reshape(1, 1, self.input_size))[0].reshape(self.input_size*2))
+        return F.sigmoid(self.linear(self.layer(x.reshape(1, 1, self.input_size))[0].reshape(self.input_size*2)))
