@@ -59,3 +59,13 @@ class SpeechEncodingModel(nn.Module):
                 x = F.tanh(layer(torch.cat((saves[i-1][0], x), dim=2)))
         x = x.reshape(1, self.output_size)
         return (x, saves)
+    
+class VoiceDiscriminatorModel(nn.Module):
+    def __init__(self, input_size):
+        super(VoiceDiscriminatorModel, self).__init__()
+        self.input_size = input_size
+        self.layer = nn.LSTM(self.input_size, self.input_size*2, 5)
+        self.linear = nn.Linear(self.input_size*2, 1)
+    
+    def forward(self, x):
+        return self.linear(self.layer(x.reshape(1, 1, self.input_size))[0].reshape(self.input_size*2))
